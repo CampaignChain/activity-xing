@@ -1,0 +1,29 @@
+parameters:
+# Parameters for the CampaignChain Activity modules in this Symfony bundle
+    campaignchain.activity.campaignchain.xing:
+        bundle_name: "campaignchain/activity-xing"
+        module_identifier: "campaignchain-xing"
+        location: %campaignchain.location.campaignchain.xing%
+        equals_operation: true
+        operations:
+            - %campaignchain.operation.campaignchain.xing.message%
+        handler: "campaignchain.activity.controller.handler.campaignchain.xing"
+
+services:
+    # The Symfony service evoking the default controller of the CampaignChain
+    # core package
+    campaignchain.activity.controller.campaignchain.xing:
+        class: CampaignChain\CoreBundle\Controller\Module\ActivityModuleController
+        calls:
+            - [setContainer, ["@service_container"]]
+            - [setParameters, ["%campaignchain.activity.campaignchain.xing%"]]
+    # The CampaignChain controller handler where the Activity's GUI and data
+    # is being processed.
+    campaignchain.activity.controller.handler.campaignchain.xing:
+        class: CampaignChain\Activity\XingBundle\Controller\XingHandler
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@session"
+            - "@templating"
+            - "@campaignchain.operation.campaignchain.xing.message"
+            - "@campaignchain.job.operation.campaignchain.xing.message"

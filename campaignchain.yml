@@ -1,0 +1,17 @@
+
+modules:
+    campaignchain-xing:
+        display_name: Post message on Xing
+        description: This module posts a message n Xing
+        channels: 
+            - campaignchain/channel-xing/campaignchain-xing
+        routes: 
+            new: campaignchain_activity_xing_new
+            edit: campaignchain_activity_xing_edit
+            edit_modal: campaignchain_activity_xing_edit_modal
+            edit_api: campaignchain_activity_xing_edit_api
+            read: campaignchain_activity_xing_read
+        hooks:
+            default:
+                campaignchain-due: true
+                campaignchain-assignee: true

@@ -1,0 +1,42 @@
+{
+    "name": "campaignchain/activity-xing",
+    "description": "Xing module for CampaignChain",
+    "keywords": ["campaignchain"],
+    "type": "campaignchain-activity",
+    "license": "Apache-2.0",
+    "homepage": "http://www.campaignchain.com",
+    "authors": [
+        {
+            "name": "CampaignChain, Inc.",
+            "email": "info@campaignchain.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/CampaignChain/campaignchain-ce/issues",
+        "docs": "http://doc.campaignchain.com"
+    },
+    "require": {
+        "campaignchain/core": "dev-master",
+        "campaignchain/location-xing": "dev-master",
+        "campaignchain/operation-xing": "dev-master",
+        "campaignchain/hook-due": "dev-master"
+    },
+    "autoload": {
+        "psr-4": { "CampaignChain\\Activity\\XingBundle\\": "" }
+    },
+    "extra": {
+        "campaignchain": {
+            "kernel": {
+                "classes": [
+                    "CampaignChain\\Activity\\XingBundle\\CampaignChainActivityXingBundle"
+                ],
+                "routing":
+                {
+                    "name": "campaignchain_activity_xing",
+                    "resource": "@CampaignChainActivityXingBundle/Resources/config/routing.yml",
+                    "prefix": "/"
+                }
+            }
+        }
+    }
+}
