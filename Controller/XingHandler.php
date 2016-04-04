@@ -338,7 +338,7 @@ class XingHandler extends AbstractActivityHandler
             $content = $this->contentService->getMessageByOperation($operation);
             $this->session->getFlashBag()->add(
                 'success',
-                'The message was published.'
+                'The message was published. <a href="'.$content->getUrl().'">View it on XING</a>.'
             );
             return true;
         }
