@@ -196,20 +196,23 @@ class XingHandler extends AbstractActivityHandler
     }
 
     /**
-     * Overwrite this method to define how the Content is supposed to be
-     * displayed.
-     *
-     * Called in these views:
-     * - read
-     *
      * @param Operation $operation
-     * @return mixed
+     * @param bool $isModal Modal view yes or no?
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
-    public function readAction(Operation $operation)
+    public function readAction(Operation $operation, $isModal = false)
     {
         $message = $this->contentService->getMessageByOperation($operation);
+
+        if(!$isModal){
+            $twigTpl = 'CampaignChainOperationXingBundle::read_message.html.twig';
+        } else {
+            $twigTpl = 'CampaignChainOperationXingBundle::read_message_modal.html.twig';
+        }
+
         return $this->templating->renderResponse(
-            'CampaignChainOperationXingBundle::read_message.html.twig',
+            $twigTpl,
             array(
                 'page_title' => $operation->getActivity()->getName(),
                 'operation' => $operation,
