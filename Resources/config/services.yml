@@ -41,3 +41,4 @@ services:
             - "@templating"
             - "@campaignchain.operation.campaignchain.xing.message"
             - "@campaignchain.job.operation.campaignchain.xing.message"
+            - "@campaignchain.core.util.scheduler"

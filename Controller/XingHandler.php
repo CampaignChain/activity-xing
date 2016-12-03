@@ -26,10 +26,10 @@ use CampaignChain\CoreBundle\Entity\Operation;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\HttpFoundation\Session\Session;
-
 use CampaignChain\Operation\XingBundle\Entity\XingMessage;
 use CampaignChain\Operation\XingBundle\EntityService\XingMessage as XingMessageService;
 use CampaignChain\Operation\XingBundle\Job\XingMessage as XingMessageJob;
+use CampaignChain\CoreBundle\Util\SchedulerUtil;
 
 /**
  * Class XingHandler
@@ -44,12 +44,16 @@ class XingHandler extends AbstractActivityHandler
     protected $job;
     private $message;
 
+    /** @var SchedulerUtil */
+    protected $schedulerUtil;
+
     public function __construct(
         ManagerRegistry $managerRegistry,
         Session $session,
         TwigEngine $templating,
         XingMessageService $contentService,
-        XingMessageJob $job
+        XingMessageJob $job,
+        SchedulerUtil $schedulerUtil
     )
     {
         $this->em = $managerRegistry->getManager();
@@ -57,6 +61,7 @@ class XingHandler extends AbstractActivityHandler
         $this->templating = $templating;
         $this->contentService = $contentService;
         $this->job = $job;
+        $this->schedulerUtil = $schedulerUtil;
     }
 
     /**
@@ -238,9 +243,9 @@ class XingHandler extends AbstractActivityHandler
      * @param $content The Activity's content object.
      * @return null
      */
-    public function postPersistNewEvent(Operation $operation, Form $form, $content = null)
+    public function postPersistNewEvent(Operation $operation, $content = null)
     {
-        $this->publishNow($operation, $form, $content);
+        $this->publishNow($operation);
         $this->em->persist($content);
         $this->em->flush();
     }
@@ -271,9 +276,9 @@ class XingHandler extends AbstractActivityHandler
      * @param $content The Activity's content object.
      * @return null
      */
-    public function postPersistEditEvent(Operation $operation, Form $form, $content = null)
+    public function postPersistEditEvent(Operation $operation, $content = null)
     {
-        $this->publishNow($operation, $form, $content);
+        $this->publishNow($operation);
     }
 
     /**
@@ -347,9 +352,9 @@ class XingHandler extends AbstractActivityHandler
         return true;
     }
     
-    private function publishNow(Operation $operation, Form $form)
+    private function publishNow(Operation $operation)
     {
-       if ($form->get('campaignchain_hook_campaignchain_due')->has('execution_choice') && $form->get('campaignchain_hook_campaignchain_due')->get('execution_choice')->getData() == 'now') {
+        if ($this->schedulerUtil->isDueNow($operation->getStartDate())) {
             $this->job->execute($operation->getId());
             $content = $this->contentService->getMessageByOperation($operation);
             $this->session->getFlashBag()->add(
