@@ -13,29 +13,29 @@
 # limitations under the License.
 
 campaignchain_activity_xing_new:
-    pattern: /activity/xing/new
+    path: /activity/xing/new
     defaults: { _controller: campaignchain.activity.controller.campaignchain.xing:newAction }
 
 campaignchain_activity_xing_edit:
-    pattern: /activity/xing/{id}/edit
+    path: /activity/xing/{id}/edit
     defaults: { _controller: campaignchain.activity.controller.campaignchain.xing:editAction }
 
 campaignchain_activity_xing_edit_modal:
-    pattern: /modal/activity/xing/{id}/edit
+    path: /modal/activity/xing/{id}/edit
     defaults: { _controller: campaignchain.activity.controller.campaignchain.xing:editModalAction }
 
 campaignchain_activity_xing_edit_api:
-    pattern: /api/private/activity/xing/byactivity/{id}/edit
+    path: /api/private/activity/xing/byactivity/{id}/edit
     defaults: { _controller: campaignchain.activity.controller.campaignchain.xing:editApiAction }
     options:
         expose: true
     
 campaignchain_activity_xing_read:
-    pattern: /activity/xing/{id}
+    path: /activity/xing/{id}
     defaults: { _controller: campaignchain.activity.controller.campaignchain.xing:readAction }
 
 campaignchain_activity_xing_read_modal:
-    pattern: /modal/activity/xing/{id}
+    path: /modal/activity/xing/{id}
     defaults: { _controller: campaignchain.activity.controller.campaignchain.xing:readModalAction }
     options:
         expose: true
