@@ -16,10 +16,10 @@
         "docs": "http://doc.campaignchain.com"
     },
     "require": {
-        "campaignchain/core": "dev-master",
-        "campaignchain/location-xing": "dev-master",
-        "campaignchain/operation-xing": "dev-master",
-        "campaignchain/hook-due": "dev-master"
+        "campaignchain/core": "1.0.x-dev",
+        "campaignchain/location-xing": "1.0.x-dev",
+        "campaignchain/operation-xing": "1.0.x-dev",
+        "campaignchain/hook-due": "1.0.x-dev"
     },
     "autoload": {
         "psr-4": { "CampaignChain\\Activity\\XingBundle\\": "" }
